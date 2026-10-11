@@ -22,7 +22,9 @@ On Claude Code older than 2.1.275, use the two-step form:
 
 ## Status
 
-Early release (0.1.0). The full pipeline has been run end to end **on macOS only**. `setup` carries
+Early release. The full pipeline — long form and vertical short — has been run end to end **on
+macOS only**. CI runs the config tests and the dependency check on Linux and Windows too, which is
+not the same as rendering a video there. `setup` carries
 install commands for Linux and Windows, but those paths are untested — issues welcome.
 
 The skills are written in **Spanish** (Claude will still answer in your language). Transcription

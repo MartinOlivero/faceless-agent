@@ -53,8 +53,17 @@ def duracion(path: Path) -> float:
     return float(out.stdout.strip())
 
 
+def _existe(archivo: Path):
+    """Corta con un mensaje que se entiende, en vez de dejar que ffmpeg escupa su error."""
+    if not archivo.is_file():
+        sys.exit(f"ERROR: falta {archivo}. Revisá MUSICA y SFX en el config de ESTE video: "
+                 "si no los declarás, se usan los del video de demostración.")
+
+
 def construir_comando(video: Path, voz: Path, assets: Path, salida: Path) -> list[str]:
-    total = duracion(voz)
+    # El largo lo marca el VIDEO, no la voz: el short tiene unos segundos de CTA después de
+    # que la voz termina, y midiendo la voz esos segundos se cortaban del archivo final.
+    total = duracion(video)
     cmd = ["ffmpeg", "-y", "-i", str(video)]          # input 0 = video (sin audio)
     filtros, labels = [], []
 
@@ -62,23 +71,30 @@ def construir_comando(video: Path, voz: Path, assets: Path, salida: Path) -> lis
     # input, y como la voz suele grabarse en mono, sin esto toda la música estéreo se aplasta a
     # un solo canal y el documental pierde el ancho. Subir la voz a estéreo arrastra la mezcla.
     cmd += ["-i", str(voz)]
-    filtros.append("[1:a]volume=1.0,aformat=channel_layouts=stereo[v]")
+    # apad rellena con silencio hasta el final del video: la mezcla dura lo que dura la primera pista.
+    filtros.append(f"[1:a]volume=1.0,aformat=channel_layouts=stereo,apad=whole_dur={total}[v]")
     labels.append("[v]")
 
     idx = 2  # próximo índice de input
     for k, (arch, t0, t1, vol) in enumerate(MUSICA):
+        if t0 >= total:
+            continue                      # esa música arranca después de que el video terminó
+        _existe(assets / "bgm" / arch)
         fin = min(t1, total)
         vent = round(fin - t0, 3)
         cmd += ["-stream_loop", "-1", "-i", str(assets / "bgm" / arch)]  # loop infinito
         d0 = int(t0 * 1000)
         filtros.append(
             f"[{idx}:a]atrim=0:{vent},volume={vol},"
-            f"afade=t=in:st=0:d=2,afade=t=out:st={round(vent-4,3)}:d=4,"
+            f"afade=t=in:st=0:d=2,afade=t=out:st={max(0.0, round(vent-4,3))}:d=4,"
             f"adelay={d0}|{d0}[m{k}]")
         labels.append(f"[m{k}]")
         idx += 1
 
     for k, (arch, t, vol) in enumerate(SFX):
+        if t >= total:
+            continue
+        _existe(assets / "sfx" / arch)
         cmd += ["-i", str(assets / "sfx" / arch)]
         d = int(t * 1000)
         filtros.append(f"[{idx}:a]volume={vol},adelay={d}|{d}[s{k}]")

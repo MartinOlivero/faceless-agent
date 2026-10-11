@@ -107,12 +107,34 @@ uv run python3 "${CLAUDE_PLUGIN_ROOT}/scripts/armar_short_hf.py" \
   --config ~/.faceless/brand.json --config <carpeta_short>/config_short.json
 ```
 El `config_short.json` usa las claves `SHORT_ESCENAS` (`["escena1.png", segundo]`), `KB` (Ken
-Burns por plano) y `CTA_DUR`. Renderizá con HyperFrames y mezclá el audio del gancho igual que
-el largo. Las imágenes del short pueden ser un symlink a las del largo (`assets` → `../<caso>/assets`).
+Burns por plano) y `CTA_DUR`, **más su propio `MUSICA` y `SFX`** con los tiempos del short. No
+reuses los del largo: están pensados para un video de minutos y la mezcla corta con error si
+nombran un archivo que no está. Ejemplo mínimo:
+```json
+{
+  "SHORT_ESCENAS": [["escena1.png", 0.0], ["escena5.png", 11.0]],
+  "KB": [[[1.25,60,0],[1.40,-60,0]], [[1.40,-50,20],[1.22,50,-20]]],
+  "CTA_DUR": 4.0,
+  "MUSICA": [["acto1.mp3", 0.0, 999.0, 0.18]],
+  "SFX": [["riser.mp3", 0.3, 0.40], ["glitch.mp3", 11.0, 0.50]]
+}
+```
+Renderizá con HyperFrames igual que el largo (paso 7) y mezclá:
+```bash
+uv run python3 "${CLAUDE_PLUGIN_ROOT}/scripts/mezclar_audio.py" \
+  <short_mudo.mp4> gancho.wav <carpeta_short>/assets <short_final.mp4> \
+  --config <carpeta_short>/config_short.json
+```
+El CTA aparece 3 s antes de que termine la voz y queda `CTA_DUR` segundos más, con música.
+Las imágenes del short pueden ser un symlink a las del largo (`assets` → `../<caso>/assets`).
 
 ## 10. Portada y entrega
 - Portada con **nanobanana pro** (Gemini 3 Pro escribe texto en español), 16:9 → redimensioná a
   1280x720 JPEG: `ffmpeg -i portada.png -vf scale=1280:720 portada.jpg`.
+  Sumale siempre estas tres guardas al prompt, que evitan los tres fallos más comunes:
+  1. que sea **sólo la imagen**, sin simular la interfaz de YouTube ni de ninguna red;
+  2. que todo el texto y el sujeto principal entren en el **84 % central** (nada tocando los bordes);
+  3. **sin emojis ni logos o elementos que no pediste**.
 - Entregá los `.mp4` + la portada. **Subida a mano por defecto** (la automática es opcional y
   frágil, ver skill setup). Si el usuario insiste en automatizarla, se hace con la API de YouTube
   v3 (`videos.insert` resumible) y su propio proyecto de Google Cloud — no hay atajo.

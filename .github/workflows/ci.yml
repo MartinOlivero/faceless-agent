@@ -1,0 +1,27 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    # Same checks on the three systems the setup skill claims to support.
+    # This does NOT render a video: it catches path, encoding and interpreter-name mistakes.
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+      - name: Scripts compile
+        run: uv run python3 -m compileall -q scripts tests
+      - name: Config tests
+        run: uv run --with pytest pytest -q
+      - name: Config vocabulary self-check
+        run: uv run python3 scripts/config_comun.py
+      - name: Doctor runs and prints valid JSON
+        run: uv run python3 scripts/doctor.py > doctor.json && uv run python3 -c "import json; d = json.load(open('doctor.json', encoding='utf-8')); print(d['os'], sorted(d['tools']))"

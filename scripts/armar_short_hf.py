@@ -138,13 +138,15 @@ def main():
           background:radial-gradient(ellipse at center, transparent 42%, rgba(0,0,0,.9) 100%); }}
   #crt {{ position:absolute; inset:0; z-index:28; pointer-events:none; opacity:{CRT_OP};
           background:repeating-linear-gradient(0deg, rgba(0,0,0,.3) 0 1px, transparent 1px 3px); }}
-  /* z-index 43 = por ENCIMA del velo del CTA (42), igual que en el largo. Hoy el CTA entra recién
-     cuando termina la voz y no se solapan, pero si un subtítulo se estira queda gris e ilegible. */
+  /* z-index 43 = por ENCIMA del velo del CTA (42), igual que en el largo: el CTA entra 3 s ANTES
+     de que termine la voz, así que el último subtítulo convive con él y tiene que leerse. */
   .sub {{ display:flex; align-items:center; justify-content:center; padding:0 70px; box-sizing:border-box;
           z-index:43; opacity:0; color:#fff; font-size:{SUB_TAMANO_SHORT}px; line-height:1.22; font-weight:800; text-align:center;
           text-shadow:0 4px 22px rgba(0,0,0,.95), 0 0 3px #000; transform:translateY(180px); }}
   #cta {{ position:absolute; inset:0; z-index:42; display:flex; flex-direction:column; align-items:center;
-          justify-content:center; gap:28px; opacity:0; background:rgba(0,0,0,.86); pointer-events:none; }}
+          justify-content:center; gap:28px; opacity:0; background:rgba(0,0,0,.86); pointer-events:none;
+          /* el texto va al tercio de arriba: en el centro se pisaba con el último subtítulo */
+          padding-bottom:620px; }}
   #cta .l1 {{ font-family:{FUENTE_MONO}; color:{ACENTO}; font-size:64px; font-weight:800;
               letter-spacing:2px; text-shadow:0 0 20px {ACENTO}99; text-align:center; }}
   #cta .l2 {{ font-family:{FUENTE_MONO}; color:#fff; font-size:46px; letter-spacing:2px; text-align:center; }}
