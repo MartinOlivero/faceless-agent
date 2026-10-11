@@ -140,5 +140,9 @@ Las imágenes del short pueden ser un symlink a las del largo (`assets` → `../
   v3 (`videos.insert` resumible) y su propio proyecto de Google Cloud — no hay atajo.
 
 Estrategia (recordar al usuario): el **short capta** (Reels/Shorts/TikTok) y cierra con CTA al
-largo; el **largo monetiza** (RPM alto). Guion + voz humanos; la IA solo produce (blindaje
-anti-demonetización). Disclosure de IA en la descripción.
+largo; el **largo monetiza** (RPM alto). Guion y voz humanos; la IA sólo produce.
+
+**Declarar la IA no es opcional.** Las plataformas evalúan la imagen, no la voz: que la narración
+sea humana no exime de nada. Las escenas generadas que parecen reales se declaran al subir (en
+YouTube, la casilla de "contenido alterado o sintético"; en Instagram/Facebook, "Información de
+IA"). Lo que se penaliza es no declararlo, no usar IA. Recordáselo al usuario en la entrega.

@@ -1,6 +1,6 @@
 # faceless-agent — a Claude Code plugin that turns your script and voice into a documentary
 
-[![Version](https://img.shields.io/badge/version-0.1.2-blue.svg)](https://github.com/MartinOlivero/faceless-agent/releases)
+[![Version](https://img.shields.io/badge/version-0.1.3-blue.svg)](https://github.com/MartinOlivero/faceless-agent/releases)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 [![ci](https://github.com/MartinOlivero/faceless-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/MartinOlivero/faceless-agent/actions/workflows/ci.yml)
 
@@ -49,9 +49,10 @@ Hecho por **Martín Olivero / [IamAutom](https://iamautom.com)**.
 | Your recorded voice (`.wav` or `.mp3`) | Word-level transcript, used to place every subtitle and cut |
 | A few timing decisions, in a small `config.json` | A 16:9 documentary and a 9:16 short, both mixed to −14 LUFS |
 
-The script and the voice stay yours on purpose. A channel where a person writes and narrates, and
-AI handles production, sits on the safe side of YouTube's authenticity rules. Declare the AI
-production in your description anyway.
+The script and the voice stay yours on purpose: that is what makes the channel recognisably
+yours. It is not what keeps you within platform rules. YouTube looks at the picture, not the voice:
+realistic AI-generated scenes have to be declared as altered or synthetic content when you upload,
+and what gets penalised is failing to declare them, not using AI.
 
 ## Install
 
