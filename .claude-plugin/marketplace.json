@@ -1,0 +1,17 @@
+{
+  "name": "faceless-agent",
+  "owner": {
+    "name": "Martín Olivero / IamAutom",
+    "url": "https://iamautom.com"
+  },
+  "metadata": {
+    "description": "Build cinematic faceless documentaries from a script and your voice — AI images, motion, sound, and a matching short, with guided setup."
+  },
+  "plugins": [
+    {
+      "name": "faceless-agent",
+      "source": "./",
+      "description": "From script + recorded voice to a finished faceless documentary (long form) and its vertical short: AI images, Ken Burns + glitch motion, synced subtitles, music/SFX. Includes /setup onboarding that detects and guides every dependency."
+    }
+  ]
+}

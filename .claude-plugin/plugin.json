@@ -1,0 +1,26 @@
+{
+  "name": "faceless-agent",
+  "version": "0.1.0",
+  "description": "Turn a script and your recorded voice into a cinematic faceless documentary — AI-generated images, Ken Burns motion, glitch transitions, CRT look, synced subtitles, music and SFX, plus a matching vertical short. A /setup skill detects and guides every dependency across macOS, Linux, and Windows.",
+  "author": {
+    "name": "Martín Olivero / IamAutom",
+    "url": "https://iamautom.com"
+  },
+  "homepage": "https://github.com/MartinOlivero/faceless-agent",
+  "repository": "https://github.com/MartinOlivero/faceless-agent",
+  "license": "MIT",
+  "keywords": [
+    "claude-code",
+    "claude-code-plugin",
+    "claude-skills",
+    "faceless",
+    "documentary",
+    "video",
+    "content-creation",
+    "hyperframes",
+    "ffmpeg",
+    "ai-video",
+    "youtube",
+    "shorts"
+  ]
+}
